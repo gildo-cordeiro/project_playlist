@@ -1,0 +1,11 @@
+Musica* music_1  = new Musica("I You Were Mine", "Thompson Acoustic Remix");
+Musica* music_2  = new Musica("Holly Ground", "Taylor Swift");
+Musica* music_3  = new Musica("Closer, Faster", "Against The Current");
+Musica* music_4  = new Musica("Children In The Dark", "Tristam");
+Musica* music_5  = new Musica("Pompei - Remix", "Bastile, Kat Krazy");
+
+Musica* music_6  = new Musica("The Days", "Avicii");
+Musica* music_7  = new Musica("Need Your Love (With Noah Kahan)", "Gryffin, Seven Lions, Noah kahan");
+Musica* music_8  = new Musica("Without You (feat. Sandro Cavazza)", "Avicii, Sandro Cavazza");
+Musica* music_9  = new Musica("Bad Reputation (feat. Joe Janiak)", "Avicii, Joe Janiak");
+Musica* music_10 = new Musica("Fade Into The Darkness", "Avicii");
