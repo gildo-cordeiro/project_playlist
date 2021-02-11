@@ -14,7 +14,6 @@ class Musica{
     public:
         Musica();
         Musica(string titulo, string artista);
-        ~Musica();
         string getTitulo();
         Musica* getNext();
         void setNext(Musica* music);

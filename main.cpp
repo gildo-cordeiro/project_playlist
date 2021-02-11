@@ -36,6 +36,7 @@ int main(int argc, char const *argv[]){
     e->insertMusic(music_10);
 
     int resp;
+    string resposta;
 
     cout << endl << "----------------------------PLAYLISTS----------------------------" << endl;
     cout<< "(1)" << p->getTitulo() << endl;
@@ -46,10 +47,19 @@ int main(int argc, char const *argv[]){
     cin >> resp;
     if(resp == 1){
         p->showPlaylist();
-        p->currentMusic();
     }else{
         e->showPlaylist();
-        e->currentMusic();
+        cout << "Tocando: " << e->getCurrentMusic()->getTitulo() << endl;
+        cout << "Deseja tocar a proxima música?" << endl;
+        cin >> resposta;
+
+        cout << endl;
+        if(resposta == "sim")
+            e->playNextMusic(e->getCurrentMusic());
+
+        e->delete_first();
+        cout<<endl;
+        e->showPlaylist();
     }
     
     // cout << "Tocando agora " << music_1->getTitulo() << endl;

@@ -18,7 +18,10 @@ public:
     string getTitulo();
     void insertMusic(Musica* music);
     void showPlaylist();
-    void currentMusic();
+    Musica* getCurrentMusic();
+    void playNextMusic(Musica *m);
+    void playPrevMusic(Musica* m);
+    void delete_first();
     Lista lista;
 };
 

@@ -52,7 +52,7 @@ void Lista::insertEnd(Musica* m){
         head = new_music;
         tail = new_music;
     }else{
-        tail->setPrev(tail);
+        tail->setPrev(head);
         tail->setNext(new_music);
         tail = new_music;
     }
@@ -74,12 +74,34 @@ bool Lista::exist(Musica* m){
     
 }
 
-void Lista::playNext(Musica* m){
-    Musica* music = head;
-    if(m->getTitulo() == music->getTitulo() && m->getArtista() == music->getArtista()){
-        cout << "Tocando " << m->getNext()->getTitulo() << endl;
-    }
+void Lista::playNext(Musica* m){   
+    
+    if(m->getTitulo() == head->getTitulo() && m->getArtista() == head->getArtista())
+        cout << "Tocando: " << m->getNext()->getTitulo() << endl;
+    
+    head->setPrev(head);
+    head = m->getNext();
+    head->setNext(head->getNext());  
 }
+
+void Lista::playPrev(Musica* m){
+
+    if(m->getTitulo() == head->getTitulo() && m->getArtista() == head->getArtista())
+        cout << "Tocando: " << m->getPrev()->getTitulo() << endl;
+
+    head->setNext(head);
+    head = m->getPrev();
+    head->setPrev(head->getPrev());  
+    
+}
+
 Musica* Lista::getCurrentMusic(){
     return head;
+}
+
+void Lista::delete_first(){  
+    Musica *temp = new Musica();
+    temp = head;
+    head = head->getNext();
+    delete temp;
 }

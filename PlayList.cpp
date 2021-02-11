@@ -29,7 +29,19 @@ void PlayList::insertMusic(Musica* music){
 void PlayList::showPlaylist(){
     lista.showLista();
 }
-void PlayList::currentMusic(){
-    cout << "Tocando a primeira musica:" << endl;
-    cout << lista.getCurrentMusic()->getTitulo() << endl;
+
+Musica* PlayList::getCurrentMusic(){
+    return lista.getCurrentMusic();
+}
+
+void PlayList::playNextMusic(Musica* m){
+    lista.playNext(m);
+}
+
+void PlayList::playPrevMusic(Musica* m){
+    lista.playPrev(m);
+}
+
+void PlayList::delete_first(){
+    lista.delete_first();
 }

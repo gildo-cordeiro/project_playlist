@@ -21,6 +21,8 @@ public:
     void insertEnd(Musica* m);
     bool exist(Musica* m);
     void playNext(Musica* m);
+    void playPrev(Musica* m);
+    void delete_first();
     Musica* getCurrentMusic();
 };
 
