@@ -18,6 +18,10 @@ string Musica::getTitulo(){
     return this->titulo;
 }
 
+void Musica::setTitulo(string titulo){
+    this->titulo = titulo;
+}
+
 Musica* Musica::getNext(){
     return this->next;
 }
@@ -34,10 +38,10 @@ void Musica::setPrev(Musica* music){
     this->prev = music;
 }
 
-void Musica::setArtista(string artista){
-    this->artista = artista;
-}
-
 string Musica::getArtista(){
     return this->artista;
+}
+
+void Musica::setArtista(string artista){
+    this->artista = artista;
 }

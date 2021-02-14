@@ -1,12 +1,16 @@
 #include "PlayList.h"
 
 
-PlayList::PlayList(string titulo){
-    this->titulo = titulo;
+PlayList::PlayList(){
+    
 }
 
 PlayList::~PlayList(){
     
+}
+
+PlayList::PlayList(string titulo){
+    this->titulo = titulo;
 }
 
 void PlayList::setTitulo(string titulo){
@@ -43,5 +47,33 @@ void PlayList::playPrevMusic(Musica* m){
 }
 
 void PlayList::delete_first(){
-    lista.delete_first();
+    //lista.delete_first();
+}
+
+void PlayList::deleteMusic(Musica *music){
+    lista.delete_position(music);
+}
+
+Musica* PlayList::findByTitulo(string titulo){
+    return lista.findByTitulo(titulo);
+}
+
+PlayList* PlayList::getNext(){
+    return this->next;
+}
+void PlayList::setNext(PlayList* list){
+    this->next = list;
+}
+PlayList* PlayList::getPrev(){
+    return this->prev;
+}
+void PlayList::setPrev(PlayList* list){
+    this->prev = list;
+}
+void PlayList::setId(int id){
+    this->id = id;
+}
+
+int PlayList::getId(){
+    return this->id;
 }

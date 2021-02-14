@@ -15,13 +15,14 @@ class Musica{
         Musica();
         Musica(string titulo, string artista);
         string getTitulo();
+        void setTitulo(string titulo);
         Musica* getNext();
         void setNext(Musica* music);
         Musica* getPrev();
         void setPrev(Musica* music);
         void setArtista(string artista);
         string getArtista();
-
+        void setAtista();
 };
 
 

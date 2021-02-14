@@ -21,7 +21,7 @@ void Lista::showLista(){
     if(empityList()){
         cout << "A lista NAO possui elementos!!\n";
     }else{
-        while(list){
+        while(list != nullptr){
             cout << list->getTitulo() << " - " << list->getArtista()  << endl;
             list = list->getNext();
         }
@@ -75,13 +75,16 @@ bool Lista::exist(Musica* m){
 }
 
 void Lista::playNext(Musica* m){   
-    
-    if(m->getTitulo() == head->getTitulo() && m->getArtista() == head->getArtista())
-        cout << "Tocando: " << m->getNext()->getTitulo() << endl;
-    
-    head->setPrev(head);
-    head = m->getNext();
-    head->setNext(head->getNext());  
+    if(m->getNext() != nullptr){
+        if(m->getTitulo() == head->getTitulo() && m->getArtista() == head->getArtista())
+            cout << "Tocando: " << m->getNext()->getTitulo() << endl;
+        
+        head->setPrev(head);
+        head = m->getNext();
+        head->setNext(head->getNext());  
+    }else{
+
+    }
 }
 
 void Lista::playPrev(Musica* m){
@@ -104,4 +107,29 @@ void Lista::delete_first(){
     temp = head;
     head = head->getNext();
     delete temp;
+}
+
+void Lista::delete_position(Musica* m) {
+    Musica *current = new Musica();
+    Musica *previous = new Musica();
+    current = head;
+
+    while(current->getTitulo() != m->getTitulo()){
+        previous = current;
+        current  = current->getNext();
+    }
+    
+    previous->setNext(current->getNext());
+}
+
+Musica* Lista::findByTitulo(string titulo){
+    while(head){
+       int pos = head->getTitulo().find(titulo);
+        if(pos != -1)
+            return head;
+
+        head = head->getNext();
+    }
+
+    return nullptr;
 }
