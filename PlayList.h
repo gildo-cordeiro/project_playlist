@@ -11,7 +11,6 @@ class PlayList{
 private:
     string titulo;
     PlayList* next;
-    PlayList* prev;
     int id;
     
 public:
@@ -24,13 +23,10 @@ public:
     void showPlaylist();
     Musica* getCurrentMusic();
     void playNextMusic(Musica *m);
-    void playPrevMusic(Musica* m);
     void delete_first();
     void deleteMusic(Musica* music);
     PlayList* getNext();
     void setNext(PlayList* list);
-    PlayList* getPrev();
-    void setPrev(PlayList* list);
     Musica* findByTitulo(string titulo);
     void setId(int id);
     int getId();

@@ -20,12 +20,13 @@ public:
     void insertBegin(Musica* m);
     void insertEnd(Musica* m);
     bool exist(Musica* m);
-    void playNext(Musica* m);
+    Musica* playNext(Musica* m);
     void playPrev(Musica* m);
     void delete_first();
     void delete_position(Musica* m);
     Musica* getCurrentMusic();
     Musica* findByTitulo(string titulo);
+    int size();
 };
 
 #endif

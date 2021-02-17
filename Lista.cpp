@@ -52,7 +52,6 @@ void Lista::insertEnd(Musica* m){
         head = new_music;
         tail = new_music;
     }else{
-        tail->setPrev(head);
         tail->setNext(new_music);
         tail = new_music;
     }
@@ -74,28 +73,8 @@ bool Lista::exist(Musica* m){
     
 }
 
-void Lista::playNext(Musica* m){   
-    if(m->getNext() != nullptr){
-        if(m->getTitulo() == head->getTitulo() && m->getArtista() == head->getArtista())
-            cout << "Tocando: " << m->getNext()->getTitulo() << endl;
-        
-        head->setPrev(head);
-        head = m->getNext();
-        head->setNext(head->getNext());  
-    }else{
-
-    }
-}
-
-void Lista::playPrev(Musica* m){
-
-    if(m->getTitulo() == head->getTitulo() && m->getArtista() == head->getArtista())
-        cout << "Tocando: " << m->getPrev()->getTitulo() << endl;
-
-    head->setNext(head);
-    head = m->getPrev();
-    head->setPrev(head->getPrev());  
-    
+Musica* Lista::playNext(Musica* m){   
+    return m->getNext() != nullptr ? head->getNext() : nullptr;
 }
 
 Musica* Lista::getCurrentMusic(){
@@ -110,16 +89,15 @@ void Lista::delete_first(){
 }
 
 void Lista::delete_position(Musica* m) {
-    Musica *current = new Musica();
-    Musica *previous = new Musica();
-    current = head;
 
-    while(current->getTitulo() != m->getTitulo()){
-        previous = current;
-        current  = current->getNext();
+    if(head->getNext() != nullptr && size() > 1){
+        while(head->getTitulo() != m->getTitulo()){
+            head = head->getNext();
+        }
+        head->setNext(head->getNext()->getNext());
+    }else{
+        head = nullptr;
     }
-    
-    previous->setNext(current->getNext());
 }
 
 Musica* Lista::findByTitulo(string titulo){
@@ -132,4 +110,20 @@ Musica* Lista::findByTitulo(string titulo){
     }
 
     return nullptr;
+}
+
+int Lista::size(){
+    
+    if(empityList())
+        return 0;
+
+    Musica* music = head;
+
+    int size = 0;
+    while(music){
+        music = music->getNext();
+        size++;
+    }
+    
+    return size;
 }

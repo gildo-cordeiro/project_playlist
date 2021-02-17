@@ -39,11 +39,10 @@ Musica* PlayList::getCurrentMusic(){
 }
 
 void PlayList::playNextMusic(Musica* m){
-    lista.playNext(m);
-}
-
-void PlayList::playPrevMusic(Musica* m){
-    lista.playPrev(m);
+    if(lista.playNext(m) != nullptr)
+        cout << "Tocando... " << lista.playNext(m)->getTitulo() << endl;
+    else
+        cout << "Não há proxima musica!" << endl;
 }
 
 void PlayList::delete_first(){
@@ -64,12 +63,7 @@ PlayList* PlayList::getNext(){
 void PlayList::setNext(PlayList* list){
     this->next = list;
 }
-PlayList* PlayList::getPrev(){
-    return this->prev;
-}
-void PlayList::setPrev(PlayList* list){
-    this->prev = list;
-}
+
 void PlayList::setId(int id){
     this->id = id;
 }

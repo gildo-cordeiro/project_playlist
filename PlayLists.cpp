@@ -19,7 +19,6 @@ void PlayLists::insertPlayList(PlayList* list, int id){
         head = new_list;
         tail = new_list;
     }else{
-        tail->setPrev(head);
         tail->setNext(new_list);
         tail = new_list;
     }
@@ -64,18 +63,44 @@ PlayList* PlayLists::findById(int id){
     return nullptr;
 }
 
-void PlayLists::removerPlayList(string name){
+void PlayLists::removerPlayList(int id){
+
+    if(head->getNext() != nullptr && size() > 1){
+        while(head->getId() != id){
+            head = head->getNext();
+        }
+        head->setNext(head->getNext()->getNext());
+    }else{
+        head = nullptr;
+    }
+}
+
+void PlayLists::romoveMusicFromAllPlayLists(Musica* music){
     PlayList *current = new PlayList();
     PlayList *previous = new PlayList();
     
     current = head;
+    while (current){
+        head->lista.delete_position(music);
 
-    if(findByName(name, current) != nullptr){
-        string titulo = findByName(name, current)->getTitulo();
-        while(current->getTitulo() != titulo){
-            previous = current;
-            current  = current->getNext();
-        }
-    }
+        previous = current;
+        current  = current->getNext();
+    }    
     previous->setNext(current->getNext());
+}
+
+int PlayLists::size(){
+    
+    if(head == nullptr)
+        return 0;
+
+    PlayList* list = head;
+
+    int size = 0;
+    while(list){
+        list = list->getNext();
+        size++;
+    }
+    
+    return size;
 }

@@ -9,7 +9,6 @@ class Musica{
         string artista;
         string titulo;
         Musica* next;
-        Musica* prev;
     
     public:
         Musica();
@@ -18,8 +17,6 @@ class Musica{
         void setTitulo(string titulo);
         Musica* getNext();
         void setNext(Musica* music);
-        Musica* getPrev();
-        void setPrev(Musica* music);
         void setArtista(string artista);
         string getArtista();
         void setAtista();

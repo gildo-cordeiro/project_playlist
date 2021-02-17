@@ -15,10 +15,12 @@ public:
     ~PlayLists();
     void insertPlayList(PlayList* list, int id);
     void showPlayLists();
-    void removerPlayList(string name);
+    void removerPlayList(int id);
     PlayList* findByName(string name, PlayList* list);
     PlayList* findById(int id);
+    void romoveMusicFromAllPlayLists(Musica* music);
     PlayList lista;
+    int size();
    
 };
 
