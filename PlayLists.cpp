@@ -1,16 +1,22 @@
 #include "PlayLists.h"
-#include <string.h>
 
-
+// Construtor padrão
 PlayLists::PlayLists(){
     this->head = nullptr;
     this->tail = nullptr;
 }
 
+// Construtor padrão
 PlayLists::~PlayLists(){
     delete head;
 }
 
+/**
+* Função: insertPlayList
+* parametros:
+* - PlayList* list: representa a referencia de uma PlayList.
+* Descrição: insere na lista encadeada de playlists a playlist passada por parametro junto com um id.
+*/
 void PlayLists::insertPlayList(PlayList* list, int id){
     PlayList* new_list = list;
     
@@ -24,33 +30,32 @@ void PlayLists::insertPlayList(PlayList* list, int id){
     }
 }
 
+/**
+* Função: showPlayLists
+* parametros:
+* - 
+* Descrição: mostra todas as playlists contidas na lista encadeada.
+*/
 void PlayLists::showPlayLists(){
     PlayList* list = head;
     
     if(head == nullptr){
-        cout << "A lista NAO possui elementos!!\n";
+        std::cout << "A lista NAO possui elementos!!\n";
     }else{
         while(list){
-            cout << "ID: " << list->getId() << " - " << list->getTitulo() << endl;
+            std::cout << "ID: " << list->getId() << " - " << list->getTitulo() << std::endl;
             list = list->getNext();
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
-PlayList* PlayLists::findByName(string name, PlayList* lista){
-
-    while(lista){
-       int pos = lista->getTitulo().find(name);
-        if(pos != -1)
-            return lista;
-
-        lista = lista->getNext();
-    }
-
-    return nullptr;
-}
-
+/**
+* Função: findById
+* parametros:
+* - int id: id que representa uma determinada playlist dentro da lista encadeada de playlists
+* Descrição: procura pela playlist que possui o id passado por parametro.
+*/
 PlayList* PlayLists::findById(int id){
     PlayList* lista = head;
 
@@ -63,6 +68,12 @@ PlayList* PlayLists::findById(int id){
     return nullptr;
 }
 
+/**
+* Função: findById
+* parametros:
+* - int id: id que representa uma determinada playlist dentro da lista encadeada de playlists
+* Descrição: procura pela playlist que possui o id passado por parametro e romove da lista encadeada.
+*/
 void PlayLists::removerPlayList(int id){
 
     if(head->getNext() != nullptr && size() > 1){
@@ -75,20 +86,12 @@ void PlayLists::removerPlayList(int id){
     }
 }
 
-void PlayLists::romoveMusicFromAllPlayLists(Musica* music){
-    PlayList *current = new PlayList();
-    PlayList *previous = new PlayList();
-    
-    current = head;
-    while (current){
-        head->lista.delete_position(music);
-
-        previous = current;
-        current  = current->getNext();
-    }    
-    previous->setNext(current->getNext());
-}
-
+/**
+* Função: findById
+* parametros:
+* - 
+* Descrição: retorna o tamanho da lista encadeada.
+*/
 int PlayLists::size(){
     
     if(head == nullptr)

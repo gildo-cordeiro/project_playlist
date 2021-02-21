@@ -2,24 +2,27 @@
 #define Musica_h
 
 #include <iostream>
-using namespace std;
 
 class Musica{
     private:
-        string artista;
-        string titulo;
+        int id;
+        std::string artista;
+        std::string titulo;
         Musica* next;
     
     public:
         Musica();
-        Musica(string titulo, string artista);
-        string getTitulo();
-        void setTitulo(string titulo);
+        ~Musica();
+        Musica(std::string titulo, std::string artista, int id);
+        std::string getTitulo();
+        void setTitulo(std::string titulo);
         Musica* getNext();
         void setNext(Musica* music);
-        void setArtista(string artista);
-        string getArtista();
+        void setArtista(std::string artista);
+        std::string getArtista();
         void setAtista();
+        void setId(int id);
+        int getId();
 };
 
 

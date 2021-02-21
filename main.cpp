@@ -4,59 +4,81 @@
 #include "Musica.h"
 #include "PlayList.h"
 #include "PlayLists.h"
+#include <cstdlib>
+#include <thread>
+#include <chrono>
 
-using namespace std;
+using std::this_thread::sleep_for;
+using namespace std::chrono_literals;
+
+void mostrarMenu(){
+    std::cout << "----------------------------------------------------------------" << std::endl;
+    std::cout << "                                                                " << std::endl;
+    std::cout << "1  - Adicionar Musica                                           " << std::endl;
+    std::cout << "2  - Mostrar Musicas                                            " << std::endl;
+    std::cout << "3  - Remover Musica                                             " << std::endl;
+    std::cout << "4  - Buscar Musica                                              " << std::endl;
+    std::cout << "5  - Adicionar Playlist                                         " << std::endl;
+    std::cout << "6  - Mostrar playlists                                          " << std::endl;
+    std::cout << "7  - Remover playlist                                           " << std::endl;
+    std::cout << "8  - Adicionar musica a playlist                                " << std::endl;
+    std::cout << "9  - Mostrar musicas da playlist                                " << std::endl;
+    std::cout << "10 - Play                                                       " << std::endl;
+    std::cout << "0  - Sair                                                       " << std::endl;
+    std::cout << "----------------------------------------------------------------" << std::endl;
+
+}
 
 int main(){
 
-    PlayList* catalog = new PlayList();    
-    PlayLists* catalog_playlists = new PlayLists();
-    Musica* music_aux = new Musica();
-    PlayList* play_aux = new PlayList();
+    // Objetos auxiliares
+    PlayList* catalog = new PlayList();  
 
-    int resp, id = 1, find_id;
-    string nome, artista;
+    PlayLists* catalog_playlists = new PlayLists();
+    PlayList* play_aux = new PlayList();
+    Musica* music_aux = new Musica();
+
+    // Variaveis auxiliares
+    int resp, id = 1, find_id, id_music = 1;
+    std::string nome, artista;
     
     while(true){
-        cout << endl << "-------------------------------------------------------" << endl;
-        cout << "                                                               " << endl;
-        cout << "1 - Adicionar Musica                                           " << endl;
-        cout << "2 - Mostrar Musicas                                            " << endl;
-        cout << "3 - Remover Musica                                             " << endl;
-        cout << "4 - Buscar Musica                                              " << endl;
-        cout << "5 - Adicionar Playlist                                         " << endl;
-        cout << "6 - Mostrar playlists                                          " << endl;
-        cout << "7 - Remover playlist                                           " << endl;
-        cout << "8 - Adicionar musica a playlist                                " << endl;
-        cout << "9 - Mostrar musicas da playlist                                " << endl;
-        cout << "10 - Play                                                       " << endl;
-        cout << "0 - Sair                                                       " << endl;
-        cin >> resp;
+        mostrarMenu();
+        std::cin >> resp;
+        system("clear");
         switch (resp){
             case 1:
-                cout << "Qual o titulo da musica? " << endl;
-                cin.ignore();
-                getline(cin, nome);
+                std::cout << "Qual o titulo da musica? " << std::endl;
+                std::cin.ignore();
+                getline(std::cin, nome);
 
-                cout << "Qual o nome do artista? " << endl;
-                cin.ignore();
-                getline(cin, artista);
+                std::cout << "Qual o nome do artista? " << std::endl;
+                std::cin.ignore();
+                getline(std::cin, artista);
 
                 if(nome != "" && artista != ""){
-                    catalog->insertMusic(new Musica(nome, artista));
-                    cout << "Musica adicionada ao catalogo." << endl;
+                    Musica* music = new Musica(nome, artista, id_music++);
+                    
+                    catalog->insertMusic(music);
+                    std::cout << "Musica adicionada ao catalogo." << std::endl;
                 }else{
-                    cout << "Informe o titulo e artista para nova musica." << endl;
+                    std::cout << "Informe o titulo e artista para nova musica." << std::endl;
                 }
+
+                sleep_for(3s);
+                system("clear");
                 break;
             case 2:
-                cout << "Mostrando todas as musicas..." << endl;
+                std::cout << "Mostrando todas as musicas..." << std::endl;
                 catalog->showPlaylist();
+
+                sleep_for(3s);
+                system("clear");
                 break;
             case 3:
-                cout << "Qual o titulo da musica? " << endl;
-                cin.ignore();
-                getline(cin, nome);
+                std::cout << "Qual o titulo da musica? " << std::endl;
+                std::cin.ignore();
+                getline(std::cin, nome);
                 
                 if(nome != ""){
                     music_aux = catalog->findByTitulo(nome);
@@ -64,125 +86,172 @@ int main(){
                         catalog->deleteMusic(music_aux);
                         //catalog_playlists->romoveMusicFromAllPlayLists(music_aux);
                     }else
-                        cout << "Musica não encontrada!" << endl;
+                        std::cout << "Musica não encontrada!" << std::endl;
                 }else{ 
-                    cout << "Informe um titulo!" << endl;
+                    std::cout << "Informe um titulo!" << std::endl;
                 }
+
+                sleep_for(3s);
+                system("clear");
                 break;
             case 4:
-                cout << "Qual o titulo da musica?" << endl;
-                cin.ignore();
-                getline(cin, nome);
+                std::cout << "Qual o titulo da musica?" << std::endl;
+                std::cin.ignore();
+                getline(std::cin, nome);
 
                 if(nome != ""){
                     music_aux = catalog->findByTitulo(nome);
 
                     if(music_aux != nullptr){
-                        cout << "Musica encontrada: " << music_aux->getTitulo() << endl;
+                        std::cout << "Musica encontrada: " << music_aux->getTitulo() << std::endl;
                     }else{
-                        cout << "Musica não encontrada" << endl;
+                        std::cout << "Musica não encontrada" << std::endl;
                     }
                 }else{
-                    cout << "Informe o titulo da musica" << endl;
+                    std::cout << "Informe o titulo da musica" << std::endl;
                 }
+
+                sleep_for(3s);
+                system("clear");
                 break;
             case 5:
-                cout << "Qual o titulo da PlayList?" << endl;
-                cin.ignore();
-                getline(cin, nome);
+                std::cout << "Qual o titulo da PlayList?" << std::endl;
+                std::cin.ignore();
+                getline(std::cin, nome);
 
-                if(nome != "")
-                    catalog_playlists->insertPlayList(new PlayList(nome), id++);
-                else 
-                    cout << "Informe um nome para PlayList!" << endl;
+                if(nome != ""){
+                    PlayList* lista = new PlayList(nome);
+                    catalog_playlists->insertPlayList(lista, id++);
+                    std::cout << "PlayList criada com sucesso" << std::endl;
+                }else{ 
+                    std::cout << "Informe um nome para PlayList!" << std::endl;
+                }
                 break;
             case 6:
-                cout << "Mostrando todas as PlayLists..." << endl;
+                std::cout << "Mostrando todas as PlayLists..." << std::endl;
                 catalog_playlists->showPlayLists();
+
+                sleep_for(3s);
+                system("clear");
                 break;
             case 7:
-                cin >> find_id;
+                std::cin >> find_id;
 
                 if(find_id > 0)
                     catalog_playlists->removerPlayList(find_id);
                 else   
-                    cout << "Informe o nome da PlayList!" << endl;
+                    std::cout << "Informe o nome da PlayList!" << std::endl;
+
+                sleep_for(3s);
+                system("clear");
                 break;
             case 8:
-                cout << "-------------------------------------------" << endl;
-                cout << "Escolha a playlist que deseja adicionar uma musica (utilize o id):" << endl;
-                catalog_playlists->showPlayLists();
+                if(catalog_playlists->size() > 0){
+                    std::cout << "-------------------------------------------" << std::endl;
+                    std::cout << "Escolha a playlist que deseja adicionar uma musica (utilize o id):" << std::endl;
+                    catalog_playlists->showPlayLists();
 
-                cin >> find_id;
-                
-                if(id != 0){
-                    play_aux = catalog_playlists->findById(find_id);
-                    if(play_aux != nullptr){
-                        string titulo = play_aux->getTitulo();
-                        cout << "Escolha a musica para adicionar a playlist " << titulo << ": "<< endl;
-                        catalog->showPlaylist();
-
-                        cout << "Qual o nome da musica?" << endl;
-                        cin.ignore();
-                        getline(cin, nome);
-                        
-                        play_aux->insertMusic(catalog->findByTitulo(nome)); 
-                        play_aux->showPlaylist();                       
-                    }else{
-                        cout << "PlayList não encontrada!" << endl;
-                    }
-                }
-                break;
-            case 9:
-                cout << "-------------------------------------------" << endl;
-                cout << "Escolha a playlist que deseja mostar as musicas (utilize o id):" << endl;
-                catalog_playlists->showPlayLists();
-                
-                cin >> find_id;
-
-                if(find_id != 0){
-                    play_aux = catalog_playlists->findById(find_id);
-                    if(play_aux != nullptr){
-                        play_aux->showPlaylist();
-                    }
-                }
-
-                break;
-            case 10:
-                cout << "-------------------------------------------" << endl;
-                cout << "Escolha a playlist que deseja tocar (utilize o id):" << endl;
-                catalog_playlists->showPlayLists();
-                
-                cin >> find_id;
-                int r;
-                if(find_id != 0){
-                    play_aux = catalog_playlists->findById(find_id);
-                    if(play_aux != nullptr){
-                        cout << "Tocando: " << play_aux->getCurrentMusic()->getTitulo() << endl;
-                        cout << "Deseja tocar a proxima? sim (1), não (2)" << endl;
+                    std::cin >> find_id;
                     
-                        cin >> r;
-                    
-                        if(r == 1){
-                            play_aux->playNextMusic(play_aux->getCurrentMusic());
-                        }else if(2){
-                            cout << "Tocando... " << play_aux->getCurrentMusic()->getTitulo() << endl;
-                        }else {   
-                            cout << "Escolha um opção (1 ou 2)!" << endl;
+                    if(id != 0){   
+                        PlayList* p = new PlayList();
+                        p = catalog_playlists->findById(find_id);
+                        if(p != nullptr){
+                            std::string titulo = p->getTitulo();
+                            std::cout << "Escolha a musica para adicionar a playlist " << titulo << ": "<< std::endl;
+                            catalog->showPlaylist();
+
+                            std::cout << "Qual a musica escolhida (use o id)?" << std::endl;
+                            std::cin >> find_id;
+
+                            Musica* music = catalog->findById(find_id);
+
+                            std::cout << music->getTitulo() << std::endl;
+                            
+                            p->insertMusic(music); 
+                            p->showPlaylist();                       
+                        }else{
+                            std::cout << "PlayList não encontrada!" << std::endl;
                         }
                     }
+                }else{
+                    std::cout << "Adicione alguma playlist antes!" << std::endl;
                 }
 
+                sleep_for(3s);
+                system("clear");
+                
+                break;
+            case 9:
+                if(catalog_playlists->size() > 0){
+                    std::cout << "-------------------------------------------" << std::endl;
+                    std::cout << "Escolha a playlist que deseja mostar as musicas (utilize o id):" << std::endl;
+                     catalog_playlists->showPlayLists();
+                
+                    std::cin >> find_id;
+
+                    if(find_id != 0){
+                        play_aux = catalog_playlists->findById(find_id);
+                        if(play_aux != nullptr){
+                            play_aux->showPlaylist();
+                        }
+                    }
+                }else{
+                    std::cout << "Adicione alguma playlist antes!" << std::endl;
+                }
+
+                sleep_for(3s);
+                system("clear");
+                
+                break;
+            case 10:
+                if(catalog_playlists->size() > 0){
+                   std::cout << "-------------------------------------------" << std::endl;
+                    std::cout << "Escolha a playlist que deseja tocar (utilize o id):" << std::endl;
+                    catalog_playlists->showPlayLists();
+                    
+                    std::cin >> find_id;
+                    int r;
+                    if(find_id != 0){
+                        play_aux = catalog_playlists->findById(find_id);
+                        if(play_aux != nullptr){
+                            std::cout << "Tocando: " << play_aux->getCurrentMusic()->getTitulo() << std::endl;
+                            std::cout << "Deseja tocar a proxima? sim (1), não (2)" << std::endl;
+                        
+                            std::cin >> r;
+                        
+                            if(r == 1){
+                                play_aux->playNextMusic(play_aux->getCurrentMusic());
+                            }else if(2){
+                                std::cout << "Tocando... " << play_aux->getCurrentMusic()->getTitulo() << std::endl;
+                            }else {   
+                                std::cout << "Escolha um opção (1 ou 2)!" << std::endl;
+                            }
+                        }
+                    } 
+                }else{
+                    std::cout << "Adicione alguma playlist antes!" << std::endl;
+                }
+
+                sleep_for(3s);
+                system("clear");
+                
                 break;
             case 0:
+                std::cout << "Encerrando..." << std::endl;
+                break;
+            default:
+                std::cout << "Comando não identificado" << std::endl;
                 break;
         }
+        if(resp == 0)
+            break;
     }
     
 
-    // cout << "Tocando agora " << music_1->getTitulo() << endl;
-    // cout << "Preparando a proxima..." << endl;
+    // std::cout << "Tocando agora " << music_1->getTitulo() << std::endl;
+    // std::cout << "Preparando a proxima..." << std::endl;
     // p->lista.playNext(music_1);
-    cout << endl;
+    std::cout << std::endl;
     return 0;
 }

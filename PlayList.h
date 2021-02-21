@@ -2,32 +2,29 @@
 #define PlayList_h
 
 #include <iostream>
-#include <vector>
 #include "Lista.h"
-
-using namespace std;
 
 class PlayList{
 private:
-    string titulo;
+    std::string titulo;
     PlayList* next;
     int id;
     
 public:
     PlayList();
-    PlayList(string titulo);
+    PlayList(std::string titulo);
     ~PlayList();
-    void setTitulo(string titulo);
-    string getTitulo();
+    void setTitulo(std::string titulo);
+    std::string getTitulo();
     void insertMusic(Musica* music);
     void showPlaylist();
     Musica* getCurrentMusic();
     void playNextMusic(Musica *m);
-    void delete_first();
     void deleteMusic(Musica* music);
     PlayList* getNext();
     void setNext(PlayList* list);
-    Musica* findByTitulo(string titulo);
+    Musica* findByTitulo(std::string titulo);
+    Musica* findById(int id);
     void setId(int id);
     int getId();
     Lista lista;
