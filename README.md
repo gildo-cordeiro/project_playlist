@@ -21,6 +21,8 @@ Na pasta onde foi clonado o repositorio execute:
 - `make all`
 - `./main`
 
+Ao executar o projeto irá aparecer um menu com todas as opções disponiveis, selecione um delas e siga conforme o programa solictar (Ex.: Qual o titulo da musica?) e após informar todas as informações solicitadas o programa conluirá a ação e 3 segundos depois redicionará para o menu novamente.
+
 ### **DIFICULDADES**
 
 Nã foi possível implementra a solução para mover musicas entre playlists e implementar corretamente os destrutores. Além disso, ao tentar mostrar todas as musicas há um *bug*
