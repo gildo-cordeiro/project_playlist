@@ -1,8 +1,7 @@
-#ifndef Lista_h
-#define Lista_h
+#pragma once
 
 #include <iostream>
-#include "Musica.h"
+#include "Musica.hpp"
 
 class Lista{
 private:
@@ -25,5 +24,3 @@ public:
     Musica* findById(int id);
     int size();
 };
-
-#endif

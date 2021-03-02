@@ -1,5 +1,4 @@
-#ifndef Musica_h
-#define Musica_h
+#pragma once
 
 #include <iostream>
 
@@ -24,6 +23,3 @@ class Musica{
         void setId(int id);
         int getId();
 };
-
-
-#endif

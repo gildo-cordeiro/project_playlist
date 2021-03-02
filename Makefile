@@ -1,22 +1,28 @@
-all: main
+all: create_dir main
 
-main: Musica.o Lista.o PlayList.o PlayLists.o main.o 
-	g++ Musica.o Lista.o PlayList.o PlayLists.o main.o -o main
+# Cria pasta para armazenar os arquivos objetos
+create_dir:
+	mkdir -p bin
 
-Musica.o: Musica.cpp Musica.h
-	g++ -c -Wall -Wextra -pedantic -o Musica.o Musica.cpp
+bin/Musica.o: src/Musica.cpp include/Musica.hpp
+	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/Musica.o src/Musica.cpp
 
-Lista.o: Lista.cpp Lista.h
-	g++ -c -Wall -Wextra -pedantic -o Lista.o Lista.cpp
+bin/Lista.o: src/Lista.cpp include/Lista.hpp
+	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/Lista.o src/Lista.cpp
 
-PlayList.o: PlayList.cpp PlayList.h
-	g++ -c -Wall -Wextra -pedantic -o PlayList.o PlayList.cpp
+bin/PlayList.o: src/PlayList.cpp include/PlayList.hpp
+	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/PlayList.o src/PlayList.cpp
 
-PlayLists.o: PlayLists.cpp PlayLists.h
-	g++ -c -Wall -Wextra -pedantic -o PlayLists.o PlayLists.cpp
+bin/PlayLists.o: src/PlayLists.cpp include/PlayLists.hpp
+	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/PlayLists.o src/PlayLists.cpp
 
-main.o: main.cpp
-	g++ -c -Wall -Wextra -pedantic -o main.o main.cpp 
+bin/main.o: src/main.cpp
+	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/main.o src/main.cpp
+
+main: bin/Musica.o bin/Lista.o bin/PlayList.o bin/PlayLists.o bin/main.o
+	g++ bin/Musica.o bin/Lista.o bin/PlayList.o bin/PlayLists.o bin/main.o -o main
+run: all
+	./main
 
 clean: clean
-	rm *.o 
+	rm -rf bin main

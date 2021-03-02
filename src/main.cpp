@@ -1,9 +1,9 @@
 #include <iostream>
 #include <stdlib.h>
-#include "Lista.h"
-#include "Musica.h"
-#include "PlayList.h"
-#include "PlayLists.h"
+#include "Lista.hpp"
+#include "Musica.hpp"
+#include "PlayList.hpp"
+#include "PlayLists.hpp"
 #include <cstdlib>
 #include <thread>
 #include <chrono>

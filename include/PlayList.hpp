@@ -1,8 +1,7 @@
-#ifndef PlayList_h
-#define PlayList_h
+#pragma once
 
 #include <iostream>
-#include "Lista.h"
+#include "Lista.hpp"
 
 class PlayList{
 private:
@@ -29,6 +28,3 @@ public:
     int getId();
     Lista lista;
 };
-
-
-#endif

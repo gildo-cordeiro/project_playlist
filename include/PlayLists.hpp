@@ -1,7 +1,6 @@
-#ifndef PlayLists_h
-#define PlayLists_h
+#pragma once
 
-#include "PlayList.h"
+#include "PlayList.hpp"
 
 class PlayLists{
 private:
@@ -19,5 +18,3 @@ public:
     int size();
    
 };
-
-#endif
