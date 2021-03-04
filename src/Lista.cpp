@@ -4,23 +4,24 @@
 Lista::Lista(){
     head = nullptr;
     tail = nullptr;
-}
-
-/**
-* Construtor parametrizado
-* parametros:
-* - string titulo: titulo para nova musica.
-* - string artista: nome do artista da musica
-* - int id: utilizado como auxiliar para identificação da musica em operações futuras
-*/
-Lista::Lista(std::string titulo, std::string artista, int id){
-    head = new Musica(titulo, artista, id);
-    tail = head;
+    size = 0;
 }
 
 // Destrutor padrão
 Lista::~Lista(){
-    delete head;
+   
+    if(size == 0){
+        return;
+    }else{
+        Node* current = head;
+
+        while (current != nullptr){
+            Node* temp = current->next;
+            delete current->music;
+            delete current;
+            current = temp;
+        }
+    }
 }
 
 /**
@@ -29,125 +30,189 @@ Lista::~Lista(){
 * - 
 * Descrição: Utilizada para mostrar as musicas contidas na lista.
 */
-void Lista::showLista(){
+void Lista::show(){
+
+    Node* list = head;
     
-    Musica* list = head;
-    
-    if(empityList()){
-        std::cout << "A lista NAO possui elementos!!\n";
+    if(list != nullptr){
+        std::cout << "A LISTA NÃO POSSUI ELEMENTOS!!\n";
     }else{
-        while(list != nullptr){
-            std::cout << "ID: (" << list->getId() << ")" << list->getTitulo() << " - " << list->getArtista()  << std::endl;
-            list = list->getNext();
+        for(int i = 0; i < size; i++){
+            std::cout << i+1 << ". " << list->music->getTitulo() << " - " << list->music->getArtista()  << std::endl;
+            list = list->next;
         }
         std::cout << std::endl;
     }
 }
 
 /**
-* Função: empityList
-* parametros:
-* - 
-* Descrição: Verificar se a lista está vazia.
-*/
-bool Lista::empityList(){
-    return (head == NULL);
-}
-
-/**
 * Função: insertEnd
 * parametros:
-* - Musica* m: representa a referencia de uma musica.
+* - Musica musica: representa uma uma musica.
 * Descrição: insere a musica no final da lista encadeada.
 */
-void Lista::insertEnd(Musica* m){
-    Musica* new_music = m;
+bool Lista::insertEnd(Musica music){
+    
+    if(search(music) == nullptr){
+        if(head == nullptr){
 
-    if(empityList()){
-        head = new_music;
-        tail = new_music;
-    }else{
-        tail->setNext(new_music);
-        tail = new_music;
-    }
-}
+            head = new Node;
+            head->music = new Musica;
 
-/**
-* Função: exist
-* parametros:
-* - Musica* m: representa a referencia de uma musica.
-* Descrição: verifica se a musica passada por parametro existe na lista.
-*/
-bool Lista::exist(Musica* m){
-    Musica* music = head;
+            head->music->setTitulo(music.getTitulo());
+            head->music->setArtista(music.getArtista());
+            head->next = nullptr;
 
-    while (music){
+            tail = head;
+            size++;
 
-        if(music->getTitulo() == m->getTitulo())
-            return true;
-        
-        music = music->getNext();
+        }else{
+
+            Node *temp = new Node;
+            temp->music = new Musica();
+
+            temp->music->setTitulo(music.getTitulo());
+            temp->music->setArtista(music.getArtista());
+            temp->next = nullptr;
+
+            tail->next = temp;
+            tail = temp;
+
+            size++;
+        }
+        return true;
     }
 
     return false;
-    
 }
 
 /**
-* Função: playNext
+* Função: search
 * parametros:
-* - Musica* m: representa a referencia de uma musica.
-* Descrição: retorna a proxima musica da lista.
+* - Musica m: representa a referencia de uma musica.
+* Descrição: verifica se a musica passada por parametro existe na lista.
 */
-Musica* Lista::playNext(Musica* m){   
-    return m->getNext() != nullptr ? head->getNext() : nullptr;
-}
+Node* Lista::search(Musica music){
 
-/**
-* Função: getCurrentMusic
-* parametros:
-* - 
-* Descrição: retorna a musica atual (head).
-*/
-Musica* Lista::getCurrentMusic(){
-    return head;
-}
+    Node *current = head;
 
-/**
-* Função: getCurrentMusic
-* parametros:
-* - Musica* m: representa a referencia de uma musica.
-* Descrição: deleta a musica recebida por parametro.
-*/
-void Lista::deleteMusic(Musica* m) {
-
-    if(head->getNext() != nullptr && size() > 1){
-        while(head->getTitulo() != m->getTitulo()){
-            head = head->getNext();
+    while(current != nullptr){
+        if(current->music->getTitulo() == music.getTitulo() && current->music->getArtista() == music.getArtista()){
+            return current; 
+        }else{
+            current = current->next;
         }
-        head->setNext(head->getNext()->getNext());
-    }else{
-        head = nullptr;
     }
-}
-
-/**
-* Função: findByTitulo
-* parametros:
-* - string titulo: string que representa o titulo de uma musica
-* Descrição: procura na lista uma musica com o mesmo titulo que foi informado no parametro.
-*/
-Musica* Lista::findByTitulo(std::string titulo){
-    while(head){
-       int pos = head->getTitulo().find(titulo);
-        if(pos != -1)
-            return head;
-
-        head = head->getNext();
-    }
-
     return nullptr;
 }
+
+void Lista::deleteMusic(int position){
+    Node *current  = head;
+    Node *prev = nullptr;
+
+    for(int i = 1; i < position; i++){ 
+        prev = current;
+        current  = current->next;
+    }
+
+    if(current == head){
+        head = head->next;
+    }else{
+        if(current == tail){
+            prev->next = nullptr;
+            tail = prev;
+        }else{
+            prev->next = current->next;
+        }
+    }
+    
+    size--; 
+
+    delete current->music;
+    delete current;
+}
+// Verifica se uma determinada música está cadastrada no sistema por sua posição (retorna ponteiro de Node)
+Node* Lista::searchByPosition(int posicao){
+
+    if(posicao >= 0 && posicao < size){ // Verifica se a posição é válida
+
+        Node *temp = head; // Objeto a receber os elementos da lista durante as iterações do laço
+
+        for(int i = 0; i < posicao; i++){ // Percorre a lista até chegar no elemento desejado
+            temp = temp->next;
+        }
+
+        return temp; // Retorna o ponteiro para o Node
+    }
+
+    return nullptr; // Posição inválida
+}
+
+Musica* Lista::searchMusic(Musica musica){
+    
+    Node *atual = head; // Objeto a receber os elementos da lista durante as iterações do laço
+
+    while(atual != nullptr){
+        if(atual->music->getTitulo() == musica.getTitulo() && atual->music->getArtista() == musica.getArtista()){
+            // Achou a música no sistema
+            return atual->music; // Retorna o ponteiro para o node que armazena a música buscada
+        }else{
+            atual = atual->next; // Pula para o pŕoximo node
+        }
+    }
+
+    return nullptr; // A música não está no sistema
+}
+
+bool Lista::insereInPosition(int posicao, Musica musica){
+
+    posicao--; // Ajusta a posição para a faixa de valores dos índices (0 -> n-1)
+
+    if(posicao == 0){ // Verifica se é na primeira posição
+        if(size == 0){
+            return insertEnd(musica); // Retorna código retornado pela função chamada
+        }// }else{
+        //     return insereInicio(musica); // Retorna código retornado pela função chamada
+        // }
+    }else{
+        if(posicao == size){ // Verifica se é na última posição
+            return insertEnd(musica); // Retorna código retornado pela função chamada
+
+        }else{
+            // A inserção é no meio da lista 
+
+            if(search(musica) == nullptr){ // Verifica se a música já está cadastrada
+                // A música não está cadastrada
+
+                Node* temp = new Node;
+                temp->music = new Musica;
+                Node* atual = head;
+                Node* anterior = nullptr;
+
+                int contador = 0;
+
+                while (contador < posicao){ // Percorre a lista até alcançar o node da posição desejada
+                    anterior = atual;
+                    atual = atual->next;                
+                    contador++;
+                }
+
+                // Copia informações da música para tempo
+                temp->music->setTitulo(musica.getTitulo());
+                temp->music->setArtista(musica.getArtista());
+
+                temp->next = atual; // Define o next da posição anterior
+                anterior->next = temp; // Atualiza o next da posição anterior
+                size++; // Incrementa o tamanho
+
+                return true; // Retrona código de sucesso
+                
+            }      
+        }
+    }
+    return false;
+}
+
 
 /**
 * Função: size
@@ -155,36 +220,6 @@ Musica* Lista::findByTitulo(std::string titulo){
 * - 
 * Descrição: retorna o tamanho da lista.
 */
-int Lista::size(){
-    
-    if(empityList())
-        return 0;
-
-    Musica* music = head;
-
-    int size = 0;
-    while(music){
-        music = music->getNext();
-        size++;
-    }
-    
+int Lista::sizeContent(){    
     return size;
-}
-
-/**
-* Função: findById
-* parametros:
-* - int id: representa o id de uma musica
-* Descrição: procura na lista uma musica com o mesmo id que foi informado no parametro.
-*/
-Musica* Lista::findById(int id){
-    Musica* lista = head;
-    while(lista != nullptr){
-        if(lista->getId() == id){
-            return lista;
-        }
-        lista = lista->getNext();
-    }
-
-    return nullptr;
 }

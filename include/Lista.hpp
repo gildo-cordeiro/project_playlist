@@ -1,26 +1,24 @@
 #pragma once
 
 #include <iostream>
-#include "Musica.hpp"
+#include "Node.hpp"
 
 class Lista{
 private:
-    Musica* head;
-    Musica* tail;
+    Node* head, *tail;
+    int size;
 
 public:
-    Lista(std::string titulo, std::string artista, int id);
     Lista();
     ~Lista();
-    void showLista();
-    bool empityList();
-    void insertEnd(Musica* m);
-    bool exist(Musica* m);
-    Musica* playNext(Musica* m);
-    void playPrev(Musica* m);
-    void deleteMusic(Musica* m);
-    Musica* getCurrentMusic();
-    Musica* findByTitulo(std::string titulo);
-    Musica* findById(int id);
-    int size();
+
+    bool insertEnd(Musica music);
+    void deleteMusic(int position);
+    bool insereInPosition(int position, Musica music);
+    Node* search(Musica music);  
+    Node* searchByPosition(int position); 
+    Musica* searchMusic(Musica music); 
+    int sizeContent();
+    void show();
+
 };
