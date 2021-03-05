@@ -1,4 +1,5 @@
 #include "Lista.hpp"
+#include "Node.hpp"
 
 // Construtor padrão
 Lista::Lista(){
@@ -34,7 +35,7 @@ void Lista::show(){
 
     Node* list = head;
     
-    if(list != nullptr){
+    if(list == nullptr){
         std::cout << "A LISTA NÃO POSSUI ELEMENTOS!!\n";
     }else{
         for(int i = 0; i < size; i++){

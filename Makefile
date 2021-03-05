@@ -1,28 +1,28 @@
-all: create_dir main
+all: dir main
 
-# Cria pasta para armazenar os arquivos objetos
-create_dir:
+dir:
 	mkdir -p bin
 
-bin/Musica.o: src/Musica.cpp include/Musica.hpp
-	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/Musica.o src/Musica.cpp
+bin/Musica.o: src/Musica.cpp
+	g++ src/Musica.cpp -Iinclude -O0 -g -Wall -ansi -pedantic -std=c++11 -c -o bin/Musica.o
 
-bin/Node.o: src/Node.cpp include/Node.hpp
-	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/Node.o src/Node.cpp
+bin/Node.o: src/Node.cpp bin/Musica.o
+	g++ src/Node.cpp -Iinclude -O0 -g -Wall -ansi -pedantic -std=c++11 -c -o bin/Node.o
 
-bin/Lista.o: src/Lista.cpp include/Lista.hpp
-	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/Lista.o src/Lista.cpp
+bin/Lista.o: src/Lista.cpp bin/Musica.o bin/Node.o
+	g++ src/Lista.cpp -Iinclude -O0 -g -Wall -ansi -pedantic -std=c++11 -c -o bin/Lista.o
 
-bin/PlayList.o: src/PlayList.cpp include/PlayList.hpp
-	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/PlayList.o src/PlayList.cpp
+bin/PlayList.o: src/PlayList.cpp bin/Musica.o bin/Node.o bin/Lista.o
+	g++ src/PlayList.cpp -Iinclude -O0 -g -Wall -ansi -pedantic -std=c++11 -c -o bin/PlayList.o
 
-bin/main.o: src/main.cpp
-	g++ -c -Wall -Iinclude -O0 -Wextra -pedantic -o bin/main.o src/main.cpp
+bin/main.o: src/main.cpp bin/Musica.o bin/Node.o bin/Lista.o bin/PlayList.o
+	g++ src/main.cpp -Iinclude -O0 -g -Wall -ansi -pedantic -std=c++11 -c -o bin/main.o
 
 main: bin/Musica.o bin/Node.o bin/Lista.o bin/PlayList.o bin/main.o
-	g++ bin/Musica.o bin/Lista.o bin/PlayList.o bin/main.o -o main
+	g++ bin/*.o -Iinclude -O0 -g -Wall -ansi -pedantic -std=c++11 -o main
+
 run: all
 	./main
 
-clean: clean
+clean:
 	rm -rf bin main

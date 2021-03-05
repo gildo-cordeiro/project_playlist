@@ -21,10 +21,9 @@ bool PlayList::addEnd(Musica musica){
 //     return playlist->inserePos(pos, musica); // Retorna código retornado pela função da classe Lista
 // }
 
-// // Remove uma música em uma posição específica da playlist
-// void PlayList::removeMusicaPos(int posicao){
-//     playlist->removePos(posicao); // Retorna código retornado pela função da classe Lista
-// }
+void PlayList::removeMusicPosition(int posicao){
+    playlist->deleteMusic(posicao);
+}
 
 // Move uma música dentro da playlist
 void PlayList::moveMusica(int pos_inicial, int pos_final){
