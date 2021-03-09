@@ -11,84 +11,98 @@ PlayList::~PlayList(){
     delete playlist;
 }
 
-// Adiciona uma música no fim da playlist
+/**
+* Função: addEnd
+* parametros:
+* - Musica musica: representa uma musica.
+* Descrição: adiciona a musica no fim da playlist
+*/
 bool PlayList::addEnd(Musica musica){
-    return playlist->insertEnd(musica); // Retorna código retornado pela função da classe Lista
+    return playlist->insertEnd(musica);
 }
 
-// // Adiciona uma música em uma posição específica da playlist
-// bool PlayList::adicionaMusicaPos(int pos, Musica musica){
-//     return playlist->inserePos(pos, musica); // Retorna código retornado pela função da classe Lista
-// }
-
+/**
+* Função: removeMusicPosition
+* parametros:
+* - int position: representa a posição da musica que sera removida da playlist.
+* Descrição: remove a musica da playlist a partir da  posição informada.
+*/
 void PlayList::removeMusicPosition(int posicao){
     playlist->deleteMusic(posicao);
 }
 
-// Move uma música dentro da playlist
-void PlayList::moveMusica(int pos_inicial, int pos_final){
-
-    Musica musica;// Variável a receber as informações da musica a ser movida
-
-    // Copia as informações da música a ser movida
-    musica.setTitulo(playlist->searchByPosition(pos_inicial - 1)->music->getTitulo());
-    musica.setArtista(playlist->searchByPosition(pos_inicial - 1)->music->getArtista());
-
-    playlist->deleteMusic(pos_inicial); // Remove a música da posição atual
-    playlist->insereInPosition(pos_final, musica); // Insere a música na posição para qual o usuário deseja movê-la
-}
-
-// Imprime as músicas da playlist recursivamente
+/**
+* Função: show
+* parametros:
+* - Node* node: representa o objeto Node que contem a musica
+* - int cont: contador
+* Descrição: metodo recursivo utilizado para mostrar todas as musicas.
+*/
 void PlayList::show(Node* node, int cont){
-    if(node == nullptr){ // Verifica se a lista já chegou ao fim
+    if(node == nullptr){
         return;
     }
     std::cout << cont << ". " << node->music->getTitulo() << " - " << node->music->getArtista() << std::endl;
-    show(node->next, cont + 1); // Faz a chamada recursiva para a immressão do próximo node 
+    show(node->next, cont + 1); 
+
 }
 
-// Retorna a próxima música a ser tocada
-Musica* PlayList::proxMusica(){
+/**
+* Função: nextMusic
+* parametros:
+* - 
+* Descrição: metodo responsavel por tocar a proxima musica
+*/
+Musica* PlayList::nextMusic(){
 
-    Node *node = playlist->searchByPosition(next); // Recebe o node que armazena a próxima música a ser tocada
+    Node *node = playlist->searchByPosition(next); 
 
-    if(node != nullptr){ // Verifica se ainda há música para tocar
+    if(node != nullptr){
         next++;
-        return node->music; // Retorna a música 
+        return node->music; 
     }
 
-    return nullptr; // A reprodução das músicas chegou ao fim
+    return nullptr; 
 }
 
-// Retorna a playlist
-Lista* PlayList::getLista(){
+/**
+* Função: getList
+* parametros:
+* - 
+* Descrição: retorna a playlist
+*/
+Lista* PlayList::getList(){
     return playlist;
 }
 
-// Descarta a lista antiga e faz uma cópia da lista recebida
-void PlayList::setLista(Lista* lista){
+/**
+* Função: setList
+* parametros:
+* - 
+* Descrição: armazena playlist
+*/
+void PlayList::setList(Lista* lista){
 
-    int tamanho_pl = playlist->sizeContent(); // Recebe o tamanho da playlist a ser redefinida
+    int tamanho_pl = playlist->getSize();
 
-    for (int i = 0; i < tamanho_pl; i++){ // Remove todos os elementos antigos
+    for (int i = 0; i < tamanho_pl; i++){
         playlist->deleteMusic(0);
     }
 
-    if(lista != nullptr){ // Verifica se o ponteiro não é nulo
-        tamanho_pl = lista->sizeContent(); // Recebe o tamanho da nova lista
+    if(lista != nullptr){
+        tamanho_pl = lista->getSize();
 
-        for (int i = 0; i < tamanho_pl; i++){ // Insere todos os elementos da nova lista na lista original
+        for (int i = 0; i < tamanho_pl; i++){
             playlist->insertEnd(*lista->searchByPosition(i)->music);
         }
     }    
 }
 
-// Define o nome da playlist
+// Modificadores de acesso dos atributos privados da classe
 void PlayList::setNome(std::string nome){
     this->titulo = nome;
 }
 
-// Retorna o nome da playlist
 std::string PlayList::getNome(){
     return titulo;
 }

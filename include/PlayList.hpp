@@ -14,13 +14,11 @@ public:
     ~PlayList();
 
     bool addEnd(Musica musica);
-    // bool adicionaMusicaPos(int posicao, Musica musica);
     void removeMusicPosition(int posicao);
-    void moveMusica(int pos_inicial, int pos_final);
     void show(Node* node, int contador);
-    Musica *proxMusica();
-    Lista* getLista();
-    void setLista(Lista* lista);
+    Musica *nextMusic();
+    Lista* getList();
+    void setList(Lista* lista);
     std::string getNome();
     void setNome(std::string);
 

@@ -10,4 +10,5 @@ public:
 
     Node();
     ~Node();
+    Node(const Node &node);
 };

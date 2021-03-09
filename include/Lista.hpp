@@ -10,15 +10,19 @@ private:
 
 public:
     Lista();
+    /*construtor copia*/
+    Lista(const Lista &list);
     ~Lista();
 
     bool insertEnd(Musica music);
+    bool insertEnd(Lista *&list);
     void deleteMusic(int position);
-    bool insereInPosition(int position, Musica music);
+    void deleteMusic(Lista *&list);
     Node* search(Musica music);  
     Node* searchByPosition(int position); 
     Musica* searchMusic(Musica music); 
-    int sizeContent();
+    Musica* getCurrentMusic();
+    int getSize();
+    void setSize(int size);
     void show();
-
 };
